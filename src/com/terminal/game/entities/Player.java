@@ -1,5 +1,6 @@
 package com.terminal.game.entities;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -7,6 +8,7 @@ import com.terminal.engine.GameContainer;
 import com.terminal.engine.gfx.Renderer;
 import com.terminal.engine.gfx.rendering.ImageTile;
 import com.terminal.game.entities.renderizable.Renderizable;
+import com.terminal.game.levels.manager.Level;
 
 public class Player extends Renderizable{
 
@@ -53,8 +55,9 @@ public class Player extends Renderizable{
 	
 	private int acceleration = 3;
 	private int moveX, moveY;
+	private Level level;
 	
-	public Player(int x, int y, int width, int height) {
+	public Player(int x, int y, int width, int height, Level level) {
 		tile = new ImageTile("/skeleton.png", 64, 64); 
 		sprite = PlayerSprite.ATTACK;
 		this.x = x;
@@ -63,15 +66,21 @@ public class Player extends Renderizable{
 		this.height = height;
 		moveX = 0;
 		moveY = 0;
+		this.level = level;
 	}
 	
 	private boolean flip;
-	private float i, j;
+	private float i, j, fallSpeed = 10, fallDistance;
 	@Override
 	public void update(GameContainer container, float dt) {
+
+		if (!level.getCollision((int)x, (int)y+moveY) && !level.getCollision((int)x+10, (int)y+moveY+10) && !level.getCollision((int)x+10+moveX, (int)y+moveY+10)) {
+			y+=moveY;
+		} 
+		if (!level.getCollision((int)x+moveX, (int)y) && !level.getCollision((int)x+moveX+10, (int)y+10) && !level.getCollision((int)x+moveX+10, (int)y+10+moveY)) {
+			x+=moveX;
+		} 
 		
-		x+=moveX;
-		y+=moveY;
 		
 		if (container.getInput().isKey(KeyEvent.VK_D)) {
 			moveX = acceleration;
@@ -79,20 +88,31 @@ public class Player extends Renderizable{
 		if (container.getInput().isKey(KeyEvent.VK_A)) {
 			moveX = -acceleration;
 		}
+		if (container.getInput().isKey(KeyEvent.VK_W)) {
+			moveY = -acceleration;
+		}
+		if (container.getInput().isKey(KeyEvent.VK_S)) {
+			moveY = acceleration;
+		}
+		
+		
 		
 		if (moveX > 0) {
-			moveX -= 1;
-			flip = true;
-			sprite = PlayerSprite.WALK;
+			moveX -= 1; //friccao
+			flip = true; // inverte o sprite
+			sprite = PlayerSprite.WALK; // muda o sprite
 		}
 		else if (moveX < 0) {
-			moveX +=1;
-			flip = false;
-			sprite = PlayerSprite.WALK;
+			moveX +=1; //friccao
+			flip = false; // inverte o sprite
+			sprite = PlayerSprite.WALK; // muda o sprite
 		} else {
-			sprite = PlayerSprite.IDLE;
+			sprite = PlayerSprite.IDLE; // parado
 		}
 		
+		if (moveY > 0) moveY-= 1;
+		if (moveY < 0) moveY+= 1;
+
 		
 		
 		i+=dt*8;
@@ -124,7 +144,8 @@ public class Player extends Renderizable{
 
 	@Override
 	public void render(GameContainer container, Renderer render) {
-		if (sprite.rendering) render.drawImage(tile.getTileImage(sprite.atualX, sprite.y, flip), (int)x, (int)y);
+		//if (sprite.rendering) render.drawImage(tile.getTileImage(sprite.atualX, sprite.y, flip), (int)x, (int)y);
+		render.fillRect((int)x, (int)y, 10, 10, Color.red.getRGB());
 	}
 	
 	

@@ -12,6 +12,11 @@ public abstract class Level {
 	public abstract void render(GameContainer container, Renderer render);
 	public abstract void init();
 	protected List<Renderizable> toRender;
-	
+	public boolean[] collision;
+	public int levelW, levelH;
+	public boolean getCollision(int x, int y) {
+		if (x < 0 || x >= levelW || y < 0 || y >= levelH) return true;
+		return collision[x + y * levelW];
+	}
 	
 }
