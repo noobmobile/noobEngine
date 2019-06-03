@@ -1,0 +1,17 @@
+package com.terminal.game.levels.manager;
+
+import java.util.List;
+
+import com.terminal.engine.GameContainer;
+import com.terminal.engine.gfx.Renderer;
+import com.terminal.game.entities.renderizable.Renderizable;
+
+public abstract class Level {
+
+	public abstract void update(GameContainer container, float dt) ;
+	public abstract void render(GameContainer container, Renderer render);
+	public abstract void init();
+	protected List<Renderizable> toRender;
+	
+	
+}
