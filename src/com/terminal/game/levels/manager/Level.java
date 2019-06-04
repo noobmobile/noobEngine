@@ -18,5 +18,9 @@ public abstract class Level {
 		if (x < 0 || x >= levelW || y < 0 || y >= levelH) return true;
 		return collision[x + y * levelW];
 	}
+	public boolean getCollision(float x, float y) {
+		if (x < 0 || x >= levelW || y < 0 || y >= levelH) return true;
+		return collision[((int)x) + ((int)y) * levelW];
+	}
 	
 }

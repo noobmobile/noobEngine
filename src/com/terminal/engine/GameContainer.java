@@ -101,7 +101,7 @@ public class GameContainer implements Runnable{
 		int frames = 0;
 		
 		while (running) {
-			render = !false; //limitar o fps
+			render = false; //limitar o fps
 			firstTime = System.nanoTime() / BILLION;
 			passedTime = firstTime - lastTime;
 			lastTime = firstTime;

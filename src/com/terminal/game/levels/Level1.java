@@ -59,8 +59,7 @@ public class Level1 extends Level{
 		for (int y = 0; y < levelH; y++) {
 			for (int x = 0; x < levelW; x++) {
 				int index = x + y * levelW;
-				if (collision[index]) render.drawRect(x, y, 1, 1, 0xff0f0f0f);
-				else render.drawRect(x, y, 1, 1, 0xfff9f9f9);
+				render.setPixel(x, y, !collision[index] ? 0xff0f0f0f : 0xfff9f9f9);
 			}	
 		}
 		

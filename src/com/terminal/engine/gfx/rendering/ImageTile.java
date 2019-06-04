@@ -26,13 +26,10 @@ public class ImageTile extends Image {
 			return new Image(p, tileWidth, tileHeight);
 
 		} else {
-			int[] p = new int[tileWidth * tileHeight];
 			BufferedImage fl = new BufferedImage(tileWidth, tileHeight, BufferedImage.TYPE_INT_ARGB);
 			int[] b = ((DataBufferInt) fl.getRaster().getDataBuffer()).getData();
 			for (int y = 0; y < tileHeight; y++) {
 				for (int x = 0; x < tileWidth; x++) {
-					p[x + y * tileWidth] = this.getPixels()[(x + tileX * tileWidth)
-							+ (y + tileY * tileHeight) * this.getWidth()];
 					b[x + y * tileWidth] = this.getPixels()[(x + tileX * tileWidth)
 							+ (y + tileY * tileHeight) * this.getWidth()];
 				}

@@ -79,6 +79,11 @@ public class Renderer {
 		}
 	}
 	
+	public int getColor(int x, int y) {
+		if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight) return -1;
+		return pixels[x + y * screenWidth];
+	}
+	
 	public void setLightMap(int x, int y, int value) {
 		if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight) return;
 
